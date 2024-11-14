@@ -94,4 +94,10 @@ class CalculatorTest {
         assertEquals(1030, calculator.add("//;\n10;20;1000;1001"));
     }
 
+//    @Test
+//    @DisplayName("Test With Delimiter Of Any Length")
+//    void testDelimiterOfAnyLength() {
+//        assertEquals(6, calculator.add("//[***]\\n1***2***3"));
+//        assertEquals(6, calculator.add("//[;*,]\\n1;*,2;*,3"));
+//    }
 }

@@ -7,6 +7,9 @@ public class Calculator {
 
     private static final String COMMA = ",";
     private static final String DEFAULT_DELIMITER_REGEX = "[\n,]";
+    // This pattern is not working
+    // private static final Pattern pattern =  Pattern.compile("^\\/\\/(\\[.*\\])\\n");
+
     private static final Pattern pattern = Pattern.compile("^//(.)\\n(.*)$");
     private static final int MAX_NUMBER = 1001;
 
