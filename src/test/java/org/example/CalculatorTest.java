@@ -38,4 +38,11 @@ class CalculatorTest {
     void testNewLine() {
         assertEquals(10, calculator.add("1\n2,3\n4"));
     }
+
+    @Test
+    @DisplayName("Test Custom Delimiter")
+    void testOtherDelimiter() {
+        assertEquals(3, calculator.add("//;\n1;2"));
+    }
+
 }
