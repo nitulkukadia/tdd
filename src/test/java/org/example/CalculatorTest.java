@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class CalculatorTest {
 
@@ -43,6 +44,40 @@ class CalculatorTest {
     @DisplayName("Test Custom Delimiter")
     void testOtherDelimiter() {
         assertEquals(3, calculator.add("//;\n1;2"));
+    }
+
+    @Test
+    @DisplayName("Test Negative Number With Default Delimiter")
+    void testNegativeNumberWithDefaultDelimiter() {
+        try {
+            calculator.add("-1,2");
+            fail("Should fail if one number is negative");
+        } catch (IllegalArgumentException e) {
+            assertEquals("negative numbers not allowed: -1", e.getMessage());
+        }
+        try {
+            calculator.add("1,-2,3,-5");
+            fail("Should fail if one multiple numbers are negative");
+        } catch (IllegalArgumentException e) {
+            assertEquals("negative numbers not allowed: -2,-5", e.getMessage());
+        }
+    }
+
+    @Test
+    @DisplayName("Test Negative Number With Custom Delimiter")
+    void testNegativeNumberWithCustomDelimiter() {
+        try {
+            calculator.add("//;\n-1;2");
+            fail("Should fail if one number is negative with custom delimiter");
+        } catch (IllegalArgumentException e) {
+            assertEquals("negative numbers not allowed: -1", e.getMessage());
+        }
+        try {
+            calculator.add("//;\n1;-2;3;-5");
+            fail("Should fail if one multiple numbers are negative with custom delimiter");
+        } catch (IllegalArgumentException e) {
+            assertEquals("negative numbers not allowed: -2,-5", e.getMessage());
+        }
     }
 
 }

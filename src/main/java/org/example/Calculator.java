@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 public class Calculator {
 
+    private static final String COMMA = ",";
     private static final String DEFAULT_DELIMITER_REGEX = "[\n,]";
     private static final Pattern pattern = Pattern.compile("^//(.)\\n(.*)$");
     public int add(String numbers) {
@@ -31,9 +32,28 @@ public class Calculator {
     }
     private int sum(String[] numbers) {
         int sum = 0;
+        boolean isNegativeNumberFound = false;
+        StringBuilder negativeNumbers = new StringBuilder();
         for (String number : numbers) {
-            sum += convertToInt(number);
+            int tempNumber = convertToInt(number);
+            if(isNegative(tempNumber)){
+                if(isNegativeNumberFound){
+                    negativeNumbers.append(COMMA).append(number);
+                }else{
+                    negativeNumbers.append(number);
+                    isNegativeNumberFound = true;
+                }
+            }else{
+                sum += tempNumber;
+            }
+        }
+        if (isNegativeNumberFound) {
+            throw new IllegalArgumentException("negative numbers not allowed: " + negativeNumbers);
         }
         return sum;
+    }
+
+    private boolean isNegative(int number) {
+        return number < 0;
     }
 }
