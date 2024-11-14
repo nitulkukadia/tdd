@@ -26,4 +26,10 @@ class CalculatorTest {
     void testAddMultipleNumbers() {
         assertEquals(6, calculator.add("1,5"));
     }
+
+    @Test
+    @DisplayName("Test Multiple Numbers")
+    void testAddAnyAmountOfNumbers() {
+        assertEquals(55, calculator.add(String.join(",", "1,2,3,4,5,6,7,8,9,10")));
+    }
 }
