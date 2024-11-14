@@ -14,4 +14,10 @@ class CalculatorTest {
     void testEmptyString() {
         assertEquals(0, calculator.add(""));
     }
+
+    @Test
+    @DisplayName("Test One Number")
+    void testAddOneNumber() {
+        assertEquals(1, calculator.add("1"));
+    }
 }
