@@ -1,7 +1,9 @@
 package org.example;
 
 public class Calculator {
-    private static final String DELIMITER = ",";
+
+    private static final String DELIMITER_REGX = "[\n,]";
+
     public int add(String numbers) {
         if (numbers.isEmpty()) {
             return 0;
@@ -15,7 +17,7 @@ public class Calculator {
         return Integer.parseInt(num);
     }
     private String[] splitNumbers(String numbers) {
-        return numbers.split(DELIMITER);
+        return numbers.split(DELIMITER_REGX);
     }
     private int sum(String[] numbers) {
         int sum = 0;

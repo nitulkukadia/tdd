@@ -32,4 +32,10 @@ class CalculatorTest {
     void testAddAnyAmountOfNumbers() {
         assertEquals(55, calculator.add(String.join(",", "1,2,3,4,5,6,7,8,9,10")));
     }
+
+    @Test
+    @DisplayName("Test New Line As Delimiter")
+    void testNewLine() {
+        assertEquals(10, calculator.add("1\n2,3\n4"));
+    }
 }
