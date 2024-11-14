@@ -80,4 +80,18 @@ class CalculatorTest {
         }
     }
 
+    @Test
+    @DisplayName("Test Thousand Number With Default Delimiter")
+    void testOverThousandWithDefaultDelimiter() {
+        assertEquals(1030, calculator.add("1001,1000,10,20"));
+        assertEquals(1030, calculator.add("20,10,1000,1001"));
+    }
+
+    @Test
+    @DisplayName("Test Thousand Number With Custom Delimiter")
+    void testOverThousandWithCustomDelimiter() {
+        assertEquals(1030, calculator.add("//;\n1001;1000;10;20"));
+        assertEquals(1030, calculator.add("//;\n10;20;1000;1001"));
+    }
+
 }

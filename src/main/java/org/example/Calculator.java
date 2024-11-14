@@ -8,6 +8,8 @@ public class Calculator {
     private static final String COMMA = ",";
     private static final String DEFAULT_DELIMITER_REGEX = "[\n,]";
     private static final Pattern pattern = Pattern.compile("^//(.)\\n(.*)$");
+    private static final int MAX_NUMBER = 1001;
+
     public int add(String numbers) {
         if (numbers.isEmpty()) {
             return 0;
@@ -43,7 +45,7 @@ public class Calculator {
                     negativeNumbers.append(number);
                     isNegativeNumberFound = true;
                 }
-            }else{
+            }else if(tempNumber < MAX_NUMBER){
                 sum += tempNumber;
             }
         }
