@@ -43,6 +43,7 @@ class CalculatorTest {
     @Test
     @DisplayName("Test Custom Delimiter")
     void testOtherDelimiter() {
+
         assertEquals(3, calculator.add("//;\n1;2"));
     }
 

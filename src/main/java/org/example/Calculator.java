@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,10 +8,6 @@ public class Calculator {
 
     private static final String COMMA = ",";
     private static final String DEFAULT_DELIMITER_REGEX = "[\n,]";
-    // This pattern is not working
-
-    // private static final Pattern pattern =  Pattern.compile("^//( \\[ .* \\] ) \\n (.*)$");
-
     private static final Pattern pattern2 = Pattern.compile("^//\\[(.*)\\]\n(.*)$");
     private static final Pattern pattern1 = Pattern.compile("^//(.)\\n(.*)$");
     private static final int MAX_NUMBER = 1001;
@@ -19,23 +16,36 @@ public class Calculator {
         if (numbers.isEmpty()) {
             return 0;
         } else {
-            String delimiterRegex;
-            String numbersPart;
-            Matcher matcher2 = pattern2.matcher(numbers);
-            Matcher matcher1 = pattern1.matcher(numbers);
-            if (matcher2.matches()) {
-                delimiterRegex = matcher2.group(1); // Capturing the delimiter Regex
-                numbersPart = matcher2.group(2); // Capturing the numbers part
-            }else if (matcher1.matches()) {
-                delimiterRegex = matcher1.group(1); // Capturing the delimiter Regex
-                numbersPart = matcher1.group(2); // Capturing the numbers part
-            } else {
-                delimiterRegex = DEFAULT_DELIMITER_REGEX;
-                numbersPart = numbers;
-            }
-            String[] numList = splitNumbers(numbersPart, delimiterRegex);
+            String[] numList = getNumList(numbers);
             return sum(numList);
         }
+    }
+
+    private String[] getNumList(String numbers) {
+        ExtractDelimiterAndNumbers result = getExtractDelimiterAndNumbers(numbers);
+        if(result != null){
+            return splitNumbers(result.numbersPart(), result.delimiterRegex());
+        }
+        return splitNumbers(numbers, DEFAULT_DELIMITER_REGEX);
+    }
+
+    private ExtractDelimiterAndNumbers getExtractDelimiterAndNumbers(String numbers) {
+        ExtractDelimiterAndNumbers result;
+        if ((result = parseNumbers(numbers, pattern1)) != null || (result = parseNumbers(numbers, pattern2)) != null) {
+            return result;
+        }
+        return null;
+    }
+
+    private record ExtractDelimiterAndNumbers(String delimiterRegex, String numbersPart) {
+    }
+
+    private ExtractDelimiterAndNumbers parseNumbers(String numbers, Pattern pattern){
+        Matcher matcher = pattern.matcher(numbers);
+        if (matcher.matches()) {
+            return new ExtractDelimiterAndNumbers( matcher.group(1), matcher.group(2));
+        }
+        return null;
     }
 
     private int convertToInt(String num) {
