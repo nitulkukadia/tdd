@@ -8,21 +8,30 @@ public class Calculator {
     private static final String COMMA = ",";
     private static final String DEFAULT_DELIMITER_REGEX = "[\n,]";
     // This pattern is not working
-    // private static final Pattern pattern =  Pattern.compile("^\\/\\/(\\[.*\\])\\n");
 
-    private static final Pattern pattern = Pattern.compile("^//(.)\\n(.*)$");
+    // private static final Pattern pattern =  Pattern.compile("^//( \\[ .* \\] ) \\n (.*)$");
+
+    private static final Pattern pattern2 = Pattern.compile("^//\\[(.*)\\]\n(.*)$");
+    private static final Pattern pattern1 = Pattern.compile("^//(.)\\n(.*)$");
     private static final int MAX_NUMBER = 1001;
 
     public int add(String numbers) {
         if (numbers.isEmpty()) {
             return 0;
         } else {
-            String delimiterRegex = DEFAULT_DELIMITER_REGEX;
-            String numbersPart = numbers;
-            Matcher matcher = pattern.matcher(numbers);
-            if (matcher.matches()) {
-                delimiterRegex = matcher.group(1); // Capturing the delimiter Regex
-                numbersPart = matcher.group(2); // Capturing the numbers part
+            String delimiterRegex;
+            String numbersPart;
+            Matcher matcher2 = pattern2.matcher(numbers);
+            Matcher matcher1 = pattern1.matcher(numbers);
+            if (matcher2.matches()) {
+                delimiterRegex = matcher2.group(1); // Capturing the delimiter Regex
+                numbersPart = matcher2.group(2); // Capturing the numbers part
+            }else if (matcher1.matches()) {
+                delimiterRegex = matcher1.group(1); // Capturing the delimiter Regex
+                numbersPart = matcher1.group(2); // Capturing the numbers part
+            } else {
+                delimiterRegex = DEFAULT_DELIMITER_REGEX;
+                numbersPart = numbers;
             }
             String[] numList = splitNumbers(numbersPart, delimiterRegex);
             return sum(numList);
